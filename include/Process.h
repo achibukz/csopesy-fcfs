@@ -23,6 +23,8 @@ public:
     bool finished() const { return finished_.load(); }
     std::chrono::system_clock::time_point createdAt() const { return createdAt_; }
 
+    static bool ordersBefore(const Process& a, const Process& b);
+
 private:
     int pid_;
     std::string name_;

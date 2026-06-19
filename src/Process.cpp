@@ -10,6 +10,11 @@ Process::Process(int pid, std::string name, int totalPrints)
       totalLines_(totalPrints),
       createdAt_(std::chrono::system_clock::now()) {}
 
+bool Process::ordersBefore(const Process& a, const Process& b) {
+    if (a.createdAt_ != b.createdAt_) return a.createdAt_ < b.createdAt_;
+    return a.pid_ < b.pid_;
+}
+
 void Process::run(int coreId,
                   uint32_t delayPerExecMs,
                   PrintLogger& logger,

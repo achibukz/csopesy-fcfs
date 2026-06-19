@@ -19,6 +19,12 @@ Scheduler::~Scheduler() {
 }
 
 void Scheduler::seed(std::vector<std::unique_ptr<Process>> initial) {
+    std::sort(initial.begin(), initial.end(),
+              [](const std::unique_ptr<Process>& a,
+                 const std::unique_ptr<Process>& b) {
+                  return Process::ordersBefore(*a, *b);
+              });
+
     std::lock_guard<std::mutex> lock(mu_);
     for (auto& p : initial) {
         ready_.push(p.get());
